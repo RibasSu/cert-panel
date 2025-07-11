@@ -1,0 +1,303 @@
+/* Estilos para simular sistemas antigos */
+
+:root {
+  --primary-color: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f0f0f0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+  background-size: 20px 20px;
+  padding-bottom: 60px;
+}
+
+/* Navbar estilizada */
+.navbar {
+  background-color: var(--primary-color) !important;
+  border-bottom: 4px solid #003366;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.navbar-brand {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.navbar-brand .bi {
+  margin-right: 8px;
+}
+
+/* Cards com aparência de terminal antigo */
+.card {
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  margin-bottom: 20px;
+}
+
+.card-header {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.card-header.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+/* Botões com aparência de terminal antigo */
+.btn {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  box-shadow: 2px 2px 0 var(--shadow-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 4px 0 var(--shadow-color);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 1px 1px 0 var(--shadow-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: #003366;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: #495057;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: #bd2130;
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  border-color: #1e7e34;
+}
+
+/* Formulários com aparência de terminal antigo */
+.form-control, .form-select {
+  font-family: 'Courier New', Courier, monospace;
+  border: 2px solid var(--border-color);
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  box-shadow: inset 1px 1px 3px var(--shadow-color);
+  transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: inset 1px 1px 3px var(--shadow-color), 0 0 0 0.2rem rgba(0, 86, 179, 0.25);
+}
+
+.form-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: var(--dark-color);
+}
+
+/* Tabelas com aparência de terminal antigo */
+.table {
+  font-family: 'Courier New', Courier, monospace;
+  border: 2px solid var(--border-color);
+}
+
+.table thead th {
+  background-color: #e9ecef;
+  border-bottom: 2px solid var(--border-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 86, 179, 0.05);
+}
+
+/* Alertas com aparência de terminal antigo */
+.alert {
+  font-family: 'Courier New', Courier, monospace;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  box-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: var(--success-color);
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: var(--danger-color);
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  border-color: var(--warning-color);
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  border-color: var(--info-color);
+}
+
+/* Badges com aparência de terminal antigo */
+.badge {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
+/* Jumbotron com aparência de terminal antigo */
+.jumbotron {
+  background-color: #e9ecef;
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Footer com aparência de terminal antigo */
+.footer {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  padding: 1rem 0;
+  border-top: 4px solid var(--primary-color);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -4px 6px var(--shadow-color);
+}
+
+/* Estilos para código monospace */
+.font-monospace {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f8f8f8;
+  padding: 2px 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+/* Estilos para modais */
+.modal-content {
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  box-shadow: 3px 3px 0 var(--shadow-color);
+}
+
+.modal-header {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.modal-footer {
+  border-top: 2px solid var(--border-color);
+}
+
+/* Estilos para paginação */
+.pagination .page-link {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  border: 2px solid var(--border-color);
+  box-shadow: 1px 1px 0 var(--shadow-color);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color);
+  border-color: #003366;
+}
+
+/* Estilos para listas */
+.list-group-item {
+  font-family: 'Courier New', Courier, monospace;
+  border: 2px solid var(--border-color);
+}
+
+/* Efeito de terminal antigo para textos */
+.terminal-text {
+  font-family: 'Courier New', Courier, monospace;
+  color: #00aa00;
+  background-color: #000;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 170, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+/* Animação de cursor piscando */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+  border-right: 2px solid #00aa00;
+  padding-right: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #00aa00; }
+}
+
+/* Estilos para impressão */
+@media print {
+  body {
+    background: none;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .btn, .navbar, .footer {
+    display: none;
+  }
+}

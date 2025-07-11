@@ -1,0 +1,77 @@
+extends layout
+
+block content
+  .jumbotron.bg-light.p-5.rounded.mb-4
+    .container
+      h1.display-4 ZeroCert - Simulador ICP-Brasil
+      p.lead Sistema de simulação da Infraestrutura de Chaves Públicas Brasileira (ICP-Brasil) para emissão de certificados digitais de teste.
+      hr.my-4
+      p Este sistema permite a emissão de certificados digitais de teste que seguem as normas e exigências da ICP-Brasil, como e-CPF e e-CNPJ.
+      p.text-danger.fw-bold Atenção: Este é um ambiente de simulação e os certificados emitidos não têm validade legal.
+      
+      if !user
+        .d-grid.gap-2.d-md-flex.justify-content-md-start
+          a.btn.btn-primary.btn-lg(href='/login') Entrar no Sistema
+          a.btn.btn-outline-secondary.btn-lg(href='/register') Criar Conta
+  
+  .row.mb-4
+    .col-md-4.mb-3
+      .card.h-100.border-primary
+        .card-header.bg-primary.text-white
+          h5.card-title.mb-0 e-CPF
+        .card-body
+          p.card-text Certificado digital para pessoas físicas, equivalente ao CPF em meio eletrônico.
+          ul
+            li Assinatura de documentos digitais
+            li Acesso a sistemas governamentais
+            li Emissão de notas fiscais eletrônicas
+        .card-footer.bg-transparent.border-top-0
+          a.btn.btn-outline-primary.w-100(href='/certificates/validate') Validar Certificado
+    
+    .col-md-4.mb-3
+      .card.h-100.border-primary
+        .card-header.bg-primary.text-white
+          h5.card-title.mb-0 e-CNPJ
+        .card-body
+          p.card-text Certificado digital para pessoas jurídicas, equivalente ao CNPJ em meio eletrônico.
+          ul
+            li Emissão de notas fiscais eletrônicas
+            li Acesso a sistemas governamentais
+            li Assinatura de documentos em nome da empresa
+        .card-footer.bg-transparent.border-top-0
+          a.btn.btn-outline-primary.w-100(href='/certificates/validate') Validar Certificado
+    
+    .col-md-4.mb-3
+      .card.h-100.border-primary
+        .card-header.bg-primary.text-white
+          h5.card-title.mb-0 Sobre a ICP-Brasil
+        .card-body
+          p.card-text A Infraestrutura de Chaves Públicas Brasileira (ICP-Brasil) é uma cadeia hierárquica de confiança que viabiliza a emissão de certificados digitais para identificação virtual do cidadão.
+          p.card-text Instituída pela Medida Provisória 2.200-2/2001, garante a autenticidade, a integridade e a validade jurídica de documentos em forma eletrônica.
+        .card-footer.bg-transparent.border-top-0
+          a.btn.btn-outline-primary.w-100(href='https://www.gov.br/iti/pt-br', target='_blank') Visitar ITI
+  
+  .row
+    .col-md-6.mb-3
+      .card.border-secondary
+        .card-header.bg-secondary.text-white
+          h5.card-title.mb-0 Como Funciona
+        .card-body
+          ol
+            li Crie uma conta no sistema
+            li Faça login com suas credenciais
+            li Solicite a emissão de um certificado digital
+            li Baixe o certificado no formato desejado
+            li Utilize o certificado para testes em seus sistemas
+    
+    .col-md-6.mb-3
+      .card.border-secondary
+        .card-header.bg-secondary.text-white
+          h5.card-title.mb-0 Características dos Certificados
+        .card-body
+          ul
+            li Seguem as normas e exigências da ICP-Brasil
+            li Disponíveis nos formatos PEM e PKCS#12 (.p12)
+            li Contêm os mesmos campos e extensões dos certificados oficiais
+            li Assinados por uma CA raiz e intermediária simuladas
+            li Incluem informações de CPF/CNPJ conforme padrões da ICP-Brasil

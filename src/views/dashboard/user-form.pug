@@ -1,0 +1,56 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-8
+      .card.border-primary
+        .card-header.bg-primary.text-white
+          h4.mb-0 #{isNew ? 'Adicionar' : 'Editar'} Usuário
+        
+        .card-body
+          form(action=isNew ? '/dashboard/users/add' : `/dashboard/users/edit/${user.id}`, method='POST')
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='username') Nome de Usuário
+                input#username.form-control(type='text', name='username', value=user ? user.username : '', required)
+              
+              .col-md-6
+                label.form-label(for='fullName') Nome Completo
+                input#fullName.form-control(type='text', name='fullName', value=user ? user.fullName : '', required)
+            
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='email') E-mail
+                input#email.form-control(type='email', name='email', value=user ? user.email : '', required)
+              
+              .col-md-6
+                label.form-label(for='role') Papel
+                select#role.form-select(name='role', required)
+                  option(value='', disabled, selected=!user) Selecione um papel
+                  option(value='admin', selected=user && user.role === 'admin') Administrador
+                  option(value='operator', selected=user && user.role === 'operator') Operador
+                  option(value='user', selected=user && user.role === 'user') Usuário
+            
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='password') Senha
+                input#password.form-control(type='password', name='password', required=isNew)
+                if !isNew
+                  small.form-text.text-muted Deixe em branco para manter a senha atual
+              
+              .col-md-6
+                label.form-label(for='confirmPassword') Confirmar Senha
+                input#confirmPassword.form-control(type='password', name='confirmPassword', required=isNew)
+            
+            .mb-3.form-check
+              input#active.form-check-input(type='checkbox', name='active', checked=!user || user.active)
+              label.form-check-label(for='active') Usuário Ativo
+            
+            .d-flex.justify-content-between
+              a.btn.btn-secondary(href='/dashboard/users')
+                i.bi.bi-arrow-left.me-2
+                | Voltar
+              
+              button.btn.btn-primary(type='submit')
+                i.bi.bi-save.me-2
+                | #{isNew ? 'Adicionar' : 'Salvar'} Usuário

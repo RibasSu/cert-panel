@@ -1,0 +1,82 @@
+extends ../layout
+
+block content
+  h2.mb-4 Meus Certificados Digitais
+  
+  .card.mb-4
+    .card-header.bg-primary.text-white
+      h5.mb-0 Certificados Emitidos
+    
+    if certificates && certificates.length > 0
+      .table-responsive
+        table.table.table-hover.mb-0
+          thead
+            tr
+              th Tipo
+              th Número de Série
+              th Data de Emissão
+              th Validade
+              th Status
+              th Ações
+          tbody
+            each cert in certificates
+              tr
+                td #{cert.type}
+                td #{cert.serialNumber.substring(0, 8)}...
+                td #{cert.createdAt.toLocaleDateString('pt-BR')}
+                td #{cert.validTo.toLocaleDateString('pt-BR')}
+                td
+                  if cert.revoked
+                    span.badge.bg-danger Revogado
+                  else if new Date() > cert.validTo
+                    span.badge.bg-warning.text-dark Expirado
+                  else
+                    span.badge.bg-success Válido
+                td
+                  .btn-group
+                    a.btn.btn-sm.btn-primary(href=`/certificates/view/${cert.id}`, title='Visualizar')
+                      i.bi.bi-eye
+    else
+      .card-body
+        .alert.alert-info.mb-0
+          p.mb-0 Você ainda não possui certificados digitais emitidos.
+  
+  .row
+    .col-md-6.mb-4
+      .card.h-100
+        .card-header.bg-primary.text-white
+          h5.mb-0 Sobre Certificados Digitais
+        .card-body
+          h6 O que é um certificado digital?
+          p Um certificado digital é um documento eletrônico que contém dados de identificação de uma pessoa ou entidade. Ele funciona como uma identidade virtual que permite realizar diversas operações pela internet com validade jurídica.
+          
+          h6 Para que serve?
+          p Os certificados digitais são utilizados para:
+          ul
+            li Assinar documentos digitalmente
+            li Realizar transações eletrônicas seguras
+            li Acessar sistemas governamentais
+            li Emitir notas fiscais eletrônicas
+            li Participar de pregões eletrônicos
+    
+    .col-md-6.mb-4
+      .card.h-100
+        .card-header.bg-primary.text-white
+          h5.mb-0 Validação de Certificados
+        .card-body
+          p Você pode validar qualquer certificado emitido pelo ZeroCert utilizando o número de série do certificado.
+          
+          form(action='/certificates/validate', method='POST')
+            .mb-3
+              label.form-label(for='serialNumber') Número de Série do Certificado
+              input#serialNumber.form-control(type='text', name='serialNumber', placeholder='Digite o número de série completo', required)
+            
+            .d-grid
+              button.btn.btn-primary(type='submit') Validar Certificado
+
+block scripts
+  script.
+    // Código JavaScript para o dashboard do usuário
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Dashboard do usuário carregado');
+    });

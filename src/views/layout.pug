@@ -1,0 +1,81 @@
+doctype html
+html(lang='pt-BR')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= title || 'ZeroCert - Simulador ICP-Brasil'
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/custom.css')
+    block styles
+  body
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.mb-4
+      .container
+        a.navbar-brand(href='/')
+          img.me-2(src='/img/logo.svg', alt='ZeroCert Logo', height='30')
+          | ZeroCert ICP-Brasil
+        button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNav')
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav.me-auto
+            if user
+              li.nav-item
+                a.nav-link(href='/dashboard') Dashboard
+              if user.role === 'admin' || user.role === 'operator'
+                li.nav-item.dropdown
+                  a.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown') Certificados
+                  ul.dropdown-menu
+                    li
+                      a.dropdown-item(href='/dashboard/certificates') Listar Certificados
+                    li
+                      a.dropdown-item(href='/certificates/issue/ecpf') Emitir e-CPF
+                    li
+                      a.dropdown-item(href='/certificates/issue/ecnpj') Emitir e-CNPJ
+                    li
+                      a.dropdown-item(href='/certificates/validate') Validar Certificado
+              else
+                li.nav-item
+                  a.nav-link(href='/certificates/validate') Validar Certificado
+              if user.role === 'admin'
+                li.nav-item
+                  a.nav-link(href='/dashboard/users') Usuários
+          ul.navbar-nav
+            if user
+              li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href='#', role='button', data-bs-toggle='dropdown')
+                  | #{user.fullName}
+                ul.dropdown-menu.dropdown-menu-end
+                  li
+                    a.dropdown-item(href='/dashboard/profile') Meu Perfil
+                  li
+                    hr.dropdown-divider
+                  li
+                    a.dropdown-item(href='/logout') Sair
+            else
+              li.nav-item
+                a.nav-link(href='/login') Login
+              li.nav-item
+                a.nav-link(href='/register') Registro
+    
+    main.container.mb-5
+      if error
+        .alert.alert-danger.alert-dismissible.fade.show
+          button.btn-close(type='button', data-bs-dismiss='alert')
+          strong Erro: 
+          | #{error}
+      
+      if success
+        .alert.alert-success.alert-dismissible.fade.show
+          button.btn-close(type='button', data-bs-dismiss='alert')
+          strong Sucesso: 
+          | #{success}
+      
+      block content
+    
+    footer.footer.mt-auto.py-3.bg-light
+      .container.text-center
+        p.text-muted.mb-0 ZeroCert - Simulador ICP-Brasil para Ambiente de Teste
+        p.text-muted.small.mb-0 Este sistema é apenas para fins de teste e não emite certificados oficiais da ICP-Brasil.
+    
+    script(src='/js/bootstrap.bundle.min.js')
+    script(src='/js/custom.js')
+    block scripts

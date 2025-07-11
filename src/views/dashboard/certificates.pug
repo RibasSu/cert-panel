@@ -1,0 +1,68 @@
+extends ../layout
+
+block content
+  .d-flex.justify-content-between.align-items-center.mb-4
+    h2 Gerenciar Certificados
+    .btn-group
+      a.btn.btn-primary(href='/certificates/issue/ecpf')
+        i.bi.bi-person-badge.me-2
+        | Emitir e-CPF
+      a.btn.btn-primary(href='/certificates/issue/ecnpj')
+        i.bi.bi-building.me-2
+        | Emitir e-CNPJ
+  
+  .card
+    .card-header.bg-primary.text-white
+      h5.mb-0 Lista de Certificados
+    
+    .table-responsive
+      table.table.table-hover.mb-0
+        thead
+          tr
+            th Tipo
+            th Número de Série
+            th Titular
+            th Emitido em
+            th Validade
+            th Status
+            th Usuário
+            th Ações
+        tbody
+          if certificates && certificates.length > 0
+            each cert in certificates
+              tr
+                td #{cert.type}
+                td #{cert.serialNumber.substring(0, 8)}...
+                td
+                  if cert.type === 'e-CPF'
+                    | #{cert.subject.name}
+                    br
+                    small.text-muted CPF: #{cert.subject.cpf}
+                  else
+                    | #{cert.subject.companyName}
+                    br
+                    small.text-muted CNPJ: #{cert.subject.cnpj}
+                td #{cert.createdAt.toLocaleDateString('pt-BR')}
+                td #{cert.validTo.toLocaleDateString('pt-BR')}
+                td
+                  if cert.revoked
+                    span.badge.bg-danger Revogado
+                  else if new Date() > cert.validTo
+                    span.badge.bg-warning.text-dark Expirado
+                  else
+                    span.badge.bg-success Válido
+                td #{cert.User.fullName}
+                td
+                  .btn-group
+                    a.btn.btn-sm.btn-primary(href=`/certificates/view/${cert.id}`, title='Visualizar')
+                      i.bi.bi-eye
+          else
+            tr
+              td(colspan='8').text-center Nenhum certificado encontrado.
+
+block scripts
+  script.
+    // Código JavaScript para gerenciamento de certificados
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Página de gerenciamento de certificados carregada');
+    });

@@ -1,0 +1,194 @@
+/* Estilos personalizados */
+
+/* Variáveis de cores */
+:root {
+  --primary-color: #004a8f;
+  --secondary-color: #0077cc;
+  --accent-color: #00a8e8;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --border-color: #ddd;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+}
+
+/* Estilos gerais */
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color);
+  border-bottom: 3px solid var(--accent-color);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: white !important;
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  border-radius: 0 !important;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+/* Formulários */
+.form-control {
+  border-radius: 0;
+  border: 1px solid var(--border-color);
+}
+
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 168, 232, 0.25);
+}
+
+/* Tabelas */
+.table {
+  border: 1px solid var(--border-color);
+}
+
+.table thead th {
+  background-color: var(--primary-color);
+  color: white;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 168, 232, 0.1);
+}
+
+/* Alertas */
+.alert {
+  border-radius: 0;
+  border-left: 5px solid transparent;
+}
+
+.alert-success {
+  border-left-color: var(--success-color);
+}
+
+.alert-warning {
+  border-left-color: var(--warning-color);
+}
+
+.alert-danger {
+  border-left-color: var(--danger-color);
+}
+
+.alert-info {
+  border-left-color: var(--info-color);
+}
+
+/* Badges */
+.badge {
+  border-radius: 0;
+  padding: 5px 10px;
+}
+
+/* Efeito de terminal */
+.terminal-text {
+  font-family: 'Courier New', Courier, monospace;
+  color: #00ff00;
+  background-color: #000;
+  padding: 15px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+}
+
+.terminal-text::after {
+  content: '|';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Jumbotron */
+.jumbotron {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 0;
+  margin-bottom: 30px;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 20px 0;
+  margin-top: 50px;
+}
+
+/* Modal */
+.modal-content {
+  border-radius: 0;
+}
+
+.modal-header {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 0;
+}
+
+/* Paginação */
+.pagination .page-item .page-link {
+  border-radius: 0;
+  color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Listas */
+.list-group-item {
+  border-radius: 0;
+  border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+  border-left-color: var(--accent-color);
+}
+
+/* Efeito de digitação */
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: typing 3.5s steps(40, end);
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}

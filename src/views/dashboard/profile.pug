@@ -1,0 +1,64 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-8
+      .card.border-primary
+        .card-header.bg-primary.text-white
+          h4.mb-0 Meu Perfil
+        
+        .card-body
+          form(action='/dashboard/profile', method='POST')
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='username') Nome de Usuário
+                input#username.form-control(type='text', value=user.username, readonly, disabled)
+                small.form-text.text-muted O nome de usuário não pode ser alterado
+              
+              .col-md-6
+                label.form-label(for='fullName') Nome Completo
+                input#fullName.form-control(type='text', name='fullName', value=user.fullName, required)
+            
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='email') E-mail
+                input#email.form-control(type='email', name='email', value=user.email, required)
+              
+              .col-md-6
+                label.form-label(for='role') Papel
+                input#role.form-control(type='text', value=user.role === 'admin' ? 'Administrador' : user.role === 'operator' ? 'Operador' : 'Usuário', readonly, disabled)
+            
+            .row.mb-3
+              .col-md-6
+                label.form-label(for='lastLogin') Último Login
+                input#lastLogin.form-control(type='text', value=user.lastLogin ? user.lastLogin.toLocaleString('pt-BR') : 'Nunca', readonly, disabled)
+              
+              .col-md-6
+                label.form-label(for='createdAt') Conta Criada em
+                input#createdAt.form-control(type='text', value=user.createdAt.toLocaleString('pt-BR'), readonly, disabled)
+            
+            h5.mt-4.mb-3 Alterar Senha
+            
+            .row.mb-3
+              .col-md-4
+                label.form-label(for='currentPassword') Senha Atual
+                input#currentPassword.form-control(type='password', name='currentPassword')
+              
+              .col-md-4
+                label.form-label(for='newPassword') Nova Senha
+                input#newPassword.form-control(type='password', name='newPassword')
+              
+              .col-md-4
+                label.form-label(for='confirmPassword') Confirmar Nova Senha
+                input#confirmPassword.form-control(type='password', name='confirmPassword')
+            
+            small.form-text.text-muted.mb-3.d-block Deixe os campos de senha em branco se não deseja alterá-la
+            
+            .d-flex.justify-content-between
+              a.btn.btn-secondary(href='/dashboard')
+                i.bi.bi-arrow-left.me-2
+                | Voltar para o Dashboard
+              
+              button.btn.btn-primary(type='submit')
+                i.bi.bi-save.me-2
+                | Salvar Alterações

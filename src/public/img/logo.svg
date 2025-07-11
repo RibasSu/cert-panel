@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="60" viewBox="0 0 200 60">
+  <style>
+    .text { font-family: Arial, sans-serif; font-weight: bold; }
+    .zero { fill: #004a8f; }
+    .cert { fill: #00a8e8; }
+    .tagline { font-size: 12px; fill: #666; }
+    .icon { fill: #004a8f; }
+  </style>
+  
+  <!-- Ícone de certificado -->
+  <path class="icon" d="M30 10 L50 10 L50 40 L40 50 L20 50 L20 20 Z" />
+  <path class="icon" d="M40 50 L40 40 L50 40" fill="none" stroke="#004a8f" stroke-width="2" />
+  <circle class="icon" cx="35" cy="30" r="5" />
+  <rect class="icon" x="30" cy="38" width="10" height="2" />
+  
+  <!-- Texto ZeroCert -->
+  <text x="60" y="35" class="text zero" font-size="24">Zero</text>
+  <text x="110" y="35" class="text cert" font-size="24">Cert</text>
+  
+  <!-- Tagline -->
+  <text x="60" y="48" class="tagline">Simulador ICP-Brasil</text>
+</svg>

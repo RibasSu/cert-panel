@@ -1,0 +1,124 @@
+extends ../layout
+
+block content
+  h2.mb-4 Dashboard Administrativo
+  
+  .row.mb-4
+    .col-md-3.mb-3
+      .card.bg-primary.text-white.h-100
+        .card-body
+          h5.card-title Total de Certificados
+          h2.display-4 #{totalCertificates}
+        .card-footer.bg-transparent.border-0
+          a.text-white.text-decoration-none(href='/dashboard/certificates') Ver Todos
+            i.bi.bi-arrow-right.ms-2
+    
+    .col-md-3.mb-3
+      .card.bg-success.text-white.h-100
+        .card-body
+          h5.card-title Certificados Ativos
+          h2.display-4 #{activeCertificates}
+        .card-footer.bg-transparent.border-0
+          a.text-white.text-decoration-none(href='/dashboard/certificates?status=active') Ver Ativos
+            i.bi.bi-arrow-right.ms-2
+    
+    .col-md-3.mb-3
+      .card.bg-danger.text-white.h-100
+        .card-body
+          h5.card-title Certificados Revogados
+          h2.display-4 #{revokedCertificates}
+        .card-footer.bg-transparent.border-0
+          a.text-white.text-decoration-none(href='/dashboard/certificates?status=revoked') Ver Revogados
+            i.bi.bi-arrow-right.ms-2
+    
+    .col-md-3.mb-3
+      .card.bg-info.text-white.h-100
+        .card-body
+          h5.card-title Total de Usuários
+          h2.display-4 #{totalUsers}
+        .card-footer.bg-transparent.border-0
+          a.text-white.text-decoration-none(href='/dashboard/users') Gerenciar Usuários
+            i.bi.bi-arrow-right.ms-2
+  
+  .row.mb-4
+    .col-md-6.mb-3
+      .card.h-100
+        .card-header.bg-primary.text-white
+          h5.mb-0 Certificados Recentes
+        .card-body.p-0
+          .table-responsive
+            table.table.table-hover.mb-0
+              thead
+                tr
+                  th Tipo
+                  th Número de Série
+                  th Data de Emissão
+                  th Status
+              tbody
+                if recentCertificates && recentCertificates.length > 0
+                  each cert in recentCertificates
+                    tr
+                      td #{cert.type}
+                      td
+                        a(href=`/certificates/view/${cert.id}`) #{cert.serialNumber.substring(0, 8)}...
+                      td #{cert.createdAt.toLocaleDateString('pt-BR')}
+                      td
+                        if cert.revoked
+                          span.badge.bg-danger Revogado
+                        else
+                          span.badge.bg-success Ativo
+                else
+                  tr
+                    td(colspan='4').text-center Nenhum certificado emitido ainda.
+    
+    .col-md-6.mb-3
+      .card.h-100
+        .card-header.bg-primary.text-white
+          h5.mb-0 Ações Rápidas
+        .card-body
+          .d-grid.gap-3
+            a.btn.btn-outline-primary(href='/certificates/issue/ecpf')
+              i.bi.bi-person-badge.me-2
+              | Emitir Certificado e-CPF
+            
+            a.btn.btn-outline-primary(href='/certificates/issue/ecnpj')
+              i.bi.bi-building.me-2
+              | Emitir Certificado e-CNPJ
+            
+            a.btn.btn-outline-primary(href='/certificates/validate')
+              i.bi.bi-check-circle.me-2
+              | Validar Certificado
+            
+            if user.role === 'admin'
+              a.btn.btn-outline-primary(href='/dashboard/users/add')
+                i.bi.bi-person-plus.me-2
+                | Adicionar Novo Usuário
+  
+  .row
+    .col-md-12
+      .card
+        .card-header.bg-secondary.text-white
+          h5.mb-0 Informações do Sistema
+        .card-body
+          .row
+            .col-md-6
+              h6 Autoridade Certificadora
+              p.mb-3 AC Raiz ICP-Brasil Simulada
+              
+              h6 Versão do Sistema
+              p.mb-3 1.0.0
+            
+            .col-md-6
+              h6 Ambiente
+              p.mb-3
+                span.badge.bg-warning.text-dark Teste
+              
+              h6 Data e Hora do Servidor
+              p.mb-0 #{new Date().toLocaleString('pt-BR')}
+
+block scripts
+  script.
+    // Código JavaScript para o dashboard administrativo
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Dashboard administrativo carregado');
+    });

@@ -1,0 +1,123 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-8
+      .card.border-primary
+        .card-header.bg-primary.text-white
+          h4.mb-0 Validar Certificado Digital
+        
+        .card-body
+          form(action='/certificates/validate', method='POST')
+            .mb-4
+              label.form-label(for='serialNumber') Número de Série do Certificado
+              .input-group
+                input#serialNumber.form-control(type='text', name='serialNumber', placeholder='Digite o número de série completo', required)
+                button.btn.btn-primary(type='submit')
+                  i.bi.bi-search.me-2
+                  | Validar
+            
+            p.text-muted.small O número de série é um identificador único do certificado digital, geralmente representado como uma sequência hexadecimal.
+          
+          if validationResult
+            .mt-4
+              if validationResult.found
+                .alert.alert-info
+                  h5.alert-heading Resultado da Validação
+                  hr
+                  
+                  .mb-3
+                    strong Número de Série: 
+                    span.font-monospace #{validationResult.serialNumber}
+                  
+                  .mb-3
+                    strong Status: 
+                    if validationResult.status === 'valid'
+                      span.badge.bg-success.fs-6 Válido
+                    else if validationResult.status === 'revoked'
+                      span.badge.bg-danger.fs-6 Revogado
+                    else if validationResult.status === 'expired'
+                      span.badge.bg-warning.text-dark.fs-6 Expirado
+                    else if validationResult.status === 'not-yet-valid'
+                      span.badge.bg-info.fs-6 Ainda não válido
+                  
+                  if validationResult.status === 'revoked'
+                    .mb-3
+                      strong Revogado em: 
+                      span #{new Date(validationResult.revokedAt).toLocaleDateString('pt-BR')}
+                    
+                    .mb-3
+                      strong Motivo da Revogação: 
+                      span #{validationResult.revocationReason}
+                  
+                  .mb-3
+                    strong Tipo de Certificado: 
+                    span #{validationResult.type}
+                  
+                  .mb-3
+                    strong Titular: 
+                    if validationResult.type === 'e-CPF'
+                      span #{validationResult.subject.name} (CPF: #{validationResult.subject.cpf})
+                    else
+                      span #{validationResult.subject.companyName} (CNPJ: #{validationResult.subject.cnpj})
+                  
+                  .mb-3
+                    strong Emitido em: 
+                    span #{new Date(validationResult.validFrom).toLocaleDateString('pt-BR')}
+                  
+                  .mb-3
+                    strong Válido até: 
+                    span #{new Date(validationResult.validTo).toLocaleDateString('pt-BR')}
+                  
+                  .mb-3
+                    strong Autoridade Certificadora: 
+                    span #{validationResult.ca.name}
+                  
+                  if validationResult.status === 'valid'
+                    .alert.alert-success.mt-3
+                      i.bi.bi-check-circle-fill.me-2
+                      | Este certificado é válido e pode ser utilizado para assinaturas digitais e autenticação.
+                  else if validationResult.status === 'revoked'
+                    .alert.alert-danger.mt-3
+                      i.bi.bi-x-circle-fill.me-2
+                      | Este certificado foi revogado e não deve ser aceito para assinaturas digitais ou autenticação.
+                  else if validationResult.status === 'expired'
+                    .alert.alert-warning.mt-3
+                      i.bi.bi-exclamation-triangle-fill.me-2
+                      | Este certificado está expirado e não deve ser aceito para assinaturas digitais ou autenticação.
+                  else if validationResult.status === 'not-yet-valid'
+                    .alert.alert-info.mt-3
+                      i.bi.bi-info-circle-fill.me-2
+                      | Este certificado ainda não é válido. Sua validade inicia em #{new Date(validationResult.validFrom).toLocaleDateString('pt-BR')}.
+              else
+                .alert.alert-danger
+                  h5.alert-heading Certificado não encontrado
+                  hr
+                  p O número de série informado não corresponde a nenhum certificado emitido por esta Autoridade Certificadora.
+                  p Verifique se o número foi digitado corretamente e tente novamente.
+      
+      .card.mt-4
+        .card-header.bg-light
+          h5.mb-0 Sobre a Validação de Certificados
+        
+        .card-body
+          p A validação de certificados digitais é um processo essencial para garantir a segurança e autenticidade de documentos eletrônicos e transações online.
+          
+          h6.mt-3 Por que validar um certificado?
+          ul
+            li Verificar se o certificado não foi revogado pelo titular ou pela Autoridade Certificadora
+            li Confirmar se o certificado está dentro do prazo de validade
+            li Garantir que o certificado foi emitido por uma Autoridade Certificadora confiável
+            li Assegurar a autenticidade da identidade do titular do certificado
+          
+          h6.mt-3 Como funciona a validação?
+          p O sistema verifica o status do certificado consultando a base de dados da Autoridade Certificadora, que mantém informações atualizadas sobre todos os certificados emitidos, incluindo aqueles que foram revogados.
+          
+          p.mt-3.small.text-muted Este sistema simula o ambiente de validação de certificados da ICP-Brasil para fins de teste e desenvolvimento.
+
+block scripts
+  script.
+    // Código JavaScript para validação de certificado
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Página de validação de certificado carregada');
+    });

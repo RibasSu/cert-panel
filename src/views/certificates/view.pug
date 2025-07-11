@@ -1,0 +1,186 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-10
+      .card.border-primary
+        .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+          h4.mb-0 Detalhes do Certificado
+          .badge.fs-6
+            if certificate.revoked
+              span.badge.bg-danger Revogado
+            else if new Date() > certificate.validTo
+              span.badge.bg-warning.text-dark Expirado
+            else
+              span.badge.bg-success Válido
+        
+        .card-body
+          .row.mb-4
+            .col-md-6
+              h5.border-bottom.pb-2 Informações Gerais
+              
+              .mb-3
+                label.fw-bold Tipo de Certificado:
+                p #{certificate.type}
+              
+              .mb-3
+                label.fw-bold Número de Série:
+                p.font-monospace #{certificate.serialNumber}
+              
+              .mb-3
+                label.fw-bold Emitido em:
+                p #{certificate.createdAt.toLocaleDateString('pt-BR')}
+              
+              .mb-3
+                label.fw-bold Válido até:
+                p #{certificate.validTo.toLocaleDateString('pt-BR')}
+              
+              if certificate.revoked
+                .mb-3
+                  label.fw-bold Revogado em:
+                  p #{certificate.revokedAt.toLocaleDateString('pt-BR')}
+                
+                .mb-3
+                  label.fw-bold Motivo da Revogação:
+                  p #{certificate.revocationReason}
+            
+            .col-md-6
+              h5.border-bottom.pb-2 Dados do Titular
+              
+              if certificate.type === 'e-CPF'
+                .mb-3
+                  label.fw-bold Nome Completo:
+                  p #{certificate.subject.name}
+                
+                .mb-3
+                  label.fw-bold CPF:
+                  p #{certificate.subject.cpf}
+                
+                .mb-3
+                  label.fw-bold Data de Nascimento:
+                  p #{new Date(certificate.subject.birthDate).toLocaleDateString('pt-BR')}
+                
+                .mb-3
+                  label.fw-bold PIS/PASEP/NIS:
+                  p #{certificate.subject.socialSecurity}
+              else
+                .mb-3
+                  label.fw-bold Razão Social:
+                  p #{certificate.subject.companyName}
+                
+                .mb-3
+                  label.fw-bold CNPJ:
+                  p #{certificate.subject.cnpj}
+                
+                .mb-3
+                  label.fw-bold Nome Fantasia:
+                  p #{certificate.subject.tradeName}
+                
+                .mb-3
+                  label.fw-bold Responsável Legal:
+                  p #{certificate.subject.responsibleName} (CPF: #{certificate.subject.responsibleCpf})
+                
+                .mb-3
+                  label.fw-bold Cargo do Responsável:
+                  p #{certificate.subject.responsiblePosition}
+          
+          .row.mb-4
+            .col-md-12
+              h5.border-bottom.pb-2 Informações Técnicas
+              
+              .row
+                .col-md-6
+                  .mb-3
+                    label.fw-bold Autoridade Certificadora:
+                    p #{ca ? ca.name : 'Não disponível'}
+                  
+                  .mb-3
+                    label.fw-bold Política de Certificação:
+                    p #{certificate.policyOid}
+                  
+                  .mb-3
+                    label.fw-bold DPC (Declaração de Práticas de Certificação):
+                    p
+                      a(href=certificate.dpcUrl, target='_blank') #{certificate.dpcUrl}
+                
+                .col-md-6
+                  .mb-3
+                    label.fw-bold Key Usage:
+                    p #{certificate.keyUsage}
+                  
+                  .mb-3
+                    label.fw-bold Extended Key Usage:
+                    p #{certificate.extendedKeyUsage}
+          
+          .row.mb-4
+            .col-md-12
+              h5.border-bottom.pb-2 Usuário Associado
+              
+              .mb-3
+                label.fw-bold Nome Completo:
+                p #{user ? user.fullName : 'Não disponível'}
+              
+              .mb-3
+                label.fw-bold Username:
+                p #{user ? user.username : 'Não disponível'}
+              
+              .mb-3
+                label.fw-bold E-mail:
+                p #{user ? user.email : 'Não disponível'}
+          
+          .row
+            .col-md-12
+              .d-flex.justify-content-between
+                .btn-group
+                  a.btn.btn-secondary(href='/dashboard')
+                    i.bi.bi-arrow-left.me-2
+                    | Voltar
+                  
+                  if !certificate.revoked
+                    button.btn.btn-danger(type='button', data-bs-toggle='modal', data-bs-target='#revokeModal')
+                      i.bi.bi-x-circle.me-2
+                      | Revogar Certificado
+                
+                .btn-group
+                  a.btn.btn-primary(href=`/certificates/download/pem/${certificate.id}`)
+                    i.bi.bi-file-earmark-text.me-2
+                    | Download PEM
+                  
+                  a.btn.btn-primary(href=`/certificates/download/p12/${certificate.id}`)
+                    i.bi.bi-file-earmark-zip.me-2
+                    | Download P12
+
+  // Modal de Revogação
+  #revokeModal.modal.fade(tabindex='-1', aria-labelledby='revokeModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header.bg-danger.text-white
+          h5#revokeModalLabel.modal-title Revogar Certificado
+          button.btn-close(type='button', data-bs-dismiss='modal', aria-label='Fechar')
+        
+        .modal-body
+          p.fw-bold Você está prestes a revogar este certificado. Esta ação não pode ser desfeita.
+          p Uma vez revogado, o certificado não poderá mais ser utilizado para assinaturas ou autenticação.
+          
+          form#revokeForm(action=`/certificates/revoke/${certificate.id}`, method='POST')
+            .mb-3
+              label.form-label(for='revocationReason') Motivo da Revogação
+              select#revocationReason.form-select(name='revocationReason', required)
+                option(value='', disabled, selected) Selecione um motivo
+                option(value='keyCompromise') Comprometimento da chave privada
+                option(value='affiliationChanged') Mudança de afiliação
+                option(value='superseded') Substituído por novo certificado
+                option(value='cessationOfOperation') Cessação de operação
+                option(value='privilegeWithdrawn') Privilégio retirado
+                option(value='unspecified') Não especificado
+        
+        .modal-footer
+          button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Cancelar
+          button.btn.btn-danger(type='submit', form='revokeForm') Revogar Certificado
+
+block scripts
+  script.
+    // Código JavaScript para visualização de certificado
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Página de visualização de certificado carregada');
+    });
