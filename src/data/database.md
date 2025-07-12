@@ -1,0 +1,1 @@
+This file was created solely for uploading the repository to GitHub. This will house the database.
