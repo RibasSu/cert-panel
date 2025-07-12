@@ -101,4 +101,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar
 
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato através de [seu-email@exemplo.com].
+Para dúvidas ou sugestões, entre em contato através de [contato@zerocert.com.br].

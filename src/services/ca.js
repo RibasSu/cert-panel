@@ -55,9 +55,9 @@ async function createRootCA() {
   
   // Atributos do certificado conforme ICP-Brasil
   const attrs = [
-    { name: 'commonName', value: 'AC Raiz ICP-Brasil Simulada' },
-    { name: 'organizationName', value: 'Instituto Nacional de Tecnologia da Informação - ITI' },
-    { name: 'organizationalUnitName', value: 'Autoridade Certificadora Raiz Brasileira Simulada' },
+    { name: 'commonName', value: 'AC Raiz ZeroTLS' },
+    { name: 'organizationName', value: 'ZeroTLS Segurança Digital Ltda.' },
+    { name: 'organizationalUnitName', value: 'Autoridade Certificadora Raiz' },
     { name: 'countryName', value: 'BR' },
     { name: 'stateOrProvinceName', value: 'DF' },
     { name: 'localityName', value: 'Brasília' }
@@ -92,10 +92,10 @@ async function createRootCA() {
   
   // Salvar a CA Raiz no banco de dados
   await CertificateAuthority.create({
-    name: 'AC Raiz ICP-Brasil Simulada',
-    commonName: 'AC Raiz ICP-Brasil Simulada',
-    organization: 'Instituto Nacional de Tecnologia da Informação - ITI',
-    organizationalUnit: 'Autoridade Certificadora Raiz Brasileira Simulada',
+    name: 'AC Raiz ZeroTLS',
+    commonName: 'AC Raiz ZeroTLS',
+    organization: 'ZeroTLS Segurança Digital Ltda.',
+    organizationalUnit: 'Autoridade Certificadora Raiz',
     country: 'BR',
     state: 'DF',
     locality: 'Brasília',
@@ -106,8 +106,8 @@ async function createRootCA() {
     validFrom: cert.validity.notBefore,
     validTo: cert.validity.notAfter,
     isRoot: true,
-    crlDistributionPoint: 'http://localhost:3000/crl/root.crl',
-    ocspResponderUrl: 'http://localhost:3000/ocsp',
+    crlDistributionPoint: 'https://cert.zerotls.com.br/crl/root.crl',
+    ocspResponderUrl: 'https://cert.zerotls.com.br/ocsp',
     active: true
   });
   
@@ -146,9 +146,9 @@ async function createIntermediateCA() {
   
   // Atributos do certificado conforme ICP-Brasil
   const subjectAttrs = [
-    { name: 'commonName', value: 'AC-ICP-Brasil Simulada' },
-    { name: 'organizationName', value: 'Instituto Nacional de Tecnologia da Informação - ITI' },
-    { name: 'organizationalUnitName', value: 'Autoridade Certificadora Intermediária Brasileira Simulada' },
+    { name: 'commonName', value: 'AC ZeroCert Intermediária' },
+    { name: 'organizationName', value: 'ZeroCert Certificados e Identidade Digital' },
+    { name: 'organizationalUnitName', value: 'Autoridade Certificadora Intermediária' },
     { name: 'countryName', value: 'BR' },
     { name: 'stateOrProvinceName', value: 'DF' },
     { name: 'localityName', value: 'Brasília' }
@@ -185,10 +185,10 @@ async function createIntermediateCA() {
   
   // Salvar a CA Intermediária no banco de dados
   await CertificateAuthority.create({
-    name: 'AC-ICP-Brasil Simulada',
-    commonName: 'AC-ICP-Brasil Simulada',
-    organization: 'Instituto Nacional de Tecnologia da Informação - ITI',
-    organizationalUnit: 'Autoridade Certificadora Intermediária Brasileira Simulada',
+    name: 'AC ZeroCert Intermediária',
+    commonName: 'AC ZeroCert Intermediária',
+    organization: 'ZeroCert Certificados e Identidade Digital',
+    organizationalUnit: 'Autoridade Certificadora Intermediária',
     country: 'BR',
     state: 'DF',
     locality: 'Brasília',
@@ -200,8 +200,8 @@ async function createIntermediateCA() {
     validTo: cert.validity.notAfter,
     isRoot: false,
     parentCAId: rootCA.id,
-    crlDistributionPoint: 'http://localhost:3000/crl/intermediate.crl',
-    ocspResponderUrl: 'http://localhost:3000/ocsp',
+    crlDistributionPoint: 'https://cert.zerocert.com.br/crl/intermediate.crl',
+    ocspResponderUrl: 'https://cert.zerocert.com.br/ocsp',
     active: true
   });
   
@@ -256,8 +256,8 @@ async function createECPFCertificate(data) {
     // Atributos do certificado conforme ICP-Brasil para e-CPF
     const subjectAttrs = [
       { name: 'commonName', value: data.name },
-      { name: 'organizationName', value: 'ICP-Brasil' },
-      { name: 'organizationalUnitName', value: 'Certificado PF A3' },
+      { name: 'organizationName', value: 'ZeroCert Certificados e Identidade Digital' },
+      { name: 'organizationalUnitName', value: 'e-CPF A1' },
       { name: 'countryName', value: 'BR' },
       { name: 'stateOrProvinceName', value: data.state },
       { name: 'localityName', value: data.city },
@@ -333,7 +333,7 @@ async function createECPFCertificate(data) {
       validFrom: cert.validity.notBefore,
       validTo: cert.validity.notAfter,
       policyOid: '2.16.76.1.2.1.7', // OID da política de certificação A3 da ICP-Brasil
-      dpcUrl: 'http://localhost:3000/dpc/dpc.pdf',
+      dpcUrl: 'http://zerocert.com.br/dpc/dpc.pdf',
       keyUsage: {
         digitalSignature: true,
         nonRepudiation: true,
@@ -477,7 +477,7 @@ async function createECNPJCertificate(data) {
       validFrom: cert.validity.notBefore,
       validTo: cert.validity.notAfter,
       policyOid: '2.16.76.1.2.1.7', // OID da política de certificação A3 da ICP-Brasil
-      dpcUrl: 'http://localhost:3000/dpc/dpc.pdf',
+      dpcUrl: 'http://zerocert.com.br/dpc/dpc.pdf',
       keyUsage: {
         digitalSignature: true,
         nonRepudiation: true,
@@ -502,23 +502,30 @@ async function createECNPJCertificate(data) {
 }
 
 // Função para formatar dados de pessoa física conforme ICP-Brasil
-function formatICPBrasilPFData(cpf, birthDate, socialSecurity) {
-  // Formatar data de nascimento (DDMMAAAA)
-  const birthDateObj = new Date(birthDate);
-  const day = String(birthDateObj.getDate()).padStart(2, '0');
-  const month = String(birthDateObj.getMonth() + 1).padStart(2, '0');
-  const year = String(birthDateObj.getFullYear());
-  const formattedBirthDate = day + month + year;
-  
-  // Formatar CPF (apenas números)
-  const formattedCPF = cpf.padStart(11, '0');
-  
-  // Formatar PIS/PASEP/NIS (apenas números)
-  const formattedSocialSecurity = socialSecurity.padStart(11, '0');
-  
-  // Formato: CPF (11 bytes) + Data de Nascimento (8 bytes) + PIS/PASEP/NIS (11 bytes) + RG (15 bytes) + Órgão Emissor (6 bytes) + UF (2 bytes)
-  // Neste exemplo, estamos preenchendo RG, Órgão Emissor e UF com zeros
-  return formattedCPF + formattedBirthDate + formattedSocialSecurity + '0'.repeat(15) + '0'.repeat(6) + '0'.repeat(2);
+function formatICPBrasilPFData(cpf, birthDateDDMMAAAA, nis, rg, issuingOrg, uf) {
+  // birthDateDDMMAAAA deve ser string com 8 dígitos: DDMMAAAA
+  const day = birthDateDDMMAAAA.slice(0, 2);
+  const month = birthDateDDMMAAAA.slice(2, 4);
+  const year = birthDateDDMMAAAA.slice(4, 8);
+  const formattedBirthDate = year + month + day; // AAAAMMDD
+
+  // CPF
+  const formattedCPF = cpf.replace(/\D/g, '').padStart(11, '0');
+
+  // NIS/PIS/PASEP
+  const formattedNIS = nis ? nis.replace(/\D/g, '').padStart(11, '0') : '0'.repeat(11);
+
+  // RG
+  const formattedRG = rg ? rg.padEnd(15, ' ') : '0'.repeat(15);
+
+  // Órgão Emissor
+  const formattedIssuingOrg = issuingOrg ? issuingOrg.padEnd(6, ' ') : '0'.repeat(6);
+
+  // UF
+  const formattedUF = uf ? uf.padEnd(2, ' ') : '0'.repeat(2);
+
+  // Concatenação final
+  return formattedCPF + formattedNIS + formattedBirthDate + formattedRG + formattedIssuingOrg + formattedUF;
 }
 
 // Função para formatar dados de pessoa jurídica conforme ICP-Brasil
