@@ -11,11 +11,13 @@ O ZeroCert é um sistema que simula a Infraestrutura de Chaves Públicas Brasile
 - Revogação de certificados
 - Download de certificados nos formatos PEM e PKCS#12 (P12)
 - Banco de dados SQLite para armazenamento
+- Suporte a HTTPS com certificados SSL autoassinados
 
 ## Requisitos
 
 - Node.js 14.x ou superior
 - NPM 6.x ou superior
+- OpenSSL (para geração de certificados SSL)
 
 ## Instalação
 
@@ -30,27 +32,57 @@ O ZeroCert é um sistema que simula a Infraestrutura de Chaves Públicas Brasile
    npm install
    ```
 
-3. Inicie o servidor:
+3. Configure as variáveis de ambiente:
+   Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
+   ```
+   # Configurações do Certificado SSL
+   SSL_COMMON_NAME=localhost
+   SSL_ORGANIZATION=ZeroCert Certificados e Identidade Digital
+   SSL_ORGANIZATIONAL_UNIT=Desenvolvimento
+   SSL_COUNTRY=BR
+   SSL_STATE=DF
+   SSL_LOCALITY=Brasilia
+   SSL_DAYS_VALID=365
+   SSL_DIRECTORY=src/ssl
+   SSL_DOMAINS=localhost
+   SSL_IPS=127.0.0.1
+   HTTP_PORT=3000
+   HTTPS_PORT=3443
+   
+   # Configurações da Aplicação (opcionais)
+   # SESSION_SECRET=sua_chave_secreta_para_sessoes
+   # DB_PATH=src/data/database.sqlite
+   ```
+   
+   **Importante**: Certifique-se de que o diretório especificado em `SSL_DIRECTORY` existe e tem permissões de escrita. O sistema irá gerar automaticamente os certificados SSL necessários para HTTPS neste diretório.
+
+4. Inicie o servidor:
    ```
    npm start
    ```
 
-4. Acesse a aplicação em seu navegador:
+5. Acesse a aplicação em seu navegador:
    ```
-   http://localhost:3000
+   http://localhost:3000   # Acesso HTTP
+   https://localhost:3443  # Acesso HTTPS (certificado autoassinado)
    ```
+   
+   **Nota**: Ao acessar via HTTPS, seu navegador poderá exibir um aviso de segurança devido ao certificado autoassinado. Isso é esperado em ambiente de desenvolvimento.
 
 ## Estrutura do Projeto
 
 ```
 ├── src/
+│   ├── data/            # Local de armazenamento do banco de dados
 │   ├── database/        # Configuração do banco de dados
 │   ├── models/          # Modelos de dados
 │   ├── public/          # Arquivos estáticos (CSS, JS, imagens)
 │   ├── routes/          # Rotas da aplicação
 │   ├── services/        # Serviços de negócio
+│   ├── ssl/             # Certificados SSL gerados
 │   ├── views/           # Templates Pug
 │   └── index.js         # Ponto de entrada da aplicação
+├── .env                 # Variáveis de ambiente
 ├── package.json
 └── README.md
 ```
@@ -89,7 +121,24 @@ Recomenda-se alterar a senha após o primeiro login.
 - **Backend**: Node.js, Express
 - **Frontend**: Bootstrap, Pug
 - **Banco de Dados**: SQLite
-- **Criptografia**: node-forge
+- **Criptografia**: node-forge, OpenSSL
+- **Ambiente**: dotenv para configuração de variáveis de ambiente
+
+## Solução de Problemas
+
+### Erro no CPF do Responsável (e-CNPJ)
+
+Se você encontrar o erro `TypeError: Cannot read properties of undefined (reading 'padStart')` ao emitir um certificado e-CNPJ, verifique se o campo "CPF" do responsável legal está preenchido corretamente. Este erro geralmente ocorre devido a uma incompatibilidade entre o nome do campo no formulário (`responsibleCpf`) e o nome esperado pelo backend (`responsibleCPF`).
+
+### Problemas com Certificados SSL
+
+Se encontrar problemas com os certificados SSL:
+
+1. Verifique se o OpenSSL está instalado e acessível no seu sistema
+2. Certifique-se de que a pasta `src/ssl` existe e tem permissões de escrita
+3. Verifique as configurações no arquivo `.env`
+4. Se os certificados não estiverem sendo gerados, verifique os logs do servidor para identificar possíveis erros
+5. Certifique-se de que as portas especificadas para HTTP e HTTPS não estão sendo utilizadas por outros serviços
 
 ## Licença
 

@@ -14,7 +14,7 @@
     "e-cpf",
     "e-cnpj"
   ],
-  "author": "",
+  "author": "André Ribas",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.1",
