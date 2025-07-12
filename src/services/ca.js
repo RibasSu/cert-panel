@@ -540,8 +540,13 @@ function formatICPBrasilPJData(cnpj) {
 
 // Função para formatar dados do responsável legal conforme ICP-Brasil
 function formatICPBrasilResponsibleData(name, cpf) {
+  // Verificar se o CPF está definido
+  if (!cpf) {
+    throw new Error('CPF do responsável não fornecido');
+  }
+  
   // Formatar CPF (apenas números)
-  const formattedCPF = cpf.padStart(11, '0');
+  const formattedCPF = cpf.replace(/[^0-9]/g, '').padStart(11, '0');
   
   // Formato: Nome do responsável (até 40 bytes) + CPF (11 bytes)
   // Preencher o nome com espaços até 40 bytes

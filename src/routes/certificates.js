@@ -113,7 +113,7 @@ router.post('/issue/ecnpj', isAuthenticated, isAdminOrOperator, async (req, res)
       companyName,
       cnpj,
       responsibleName,
-      responsibleCPF,
+      responsibleCpf, // Alterado de responsibleCPF para responsibleCpf para corresponder ao nome do campo no formulário
       email,
       state,
       city,
@@ -148,7 +148,7 @@ router.post('/issue/ecnpj', isAuthenticated, isAdminOrOperator, async (req, res)
       companyName,
       cnpj,
       responsibleName,
-      responsibleCPF,
+      responsibleCPF: responsibleCpf, // Corrigido para passar o valor com o nome correto esperado pela função
       email,
       state,
       city,
