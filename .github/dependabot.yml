@@ -1,11 +1,29 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# Configuração do Dependabot para atualizações automáticas de dependências
+# Documentação completa: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Configuração para dependências npm/Node.js
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
+    # Ignorar atualizações de versões principais que podem quebrar compatibilidade
+    versioning-strategy: "auto"
+    # Agrupar todas as atualizações de dependências de desenvolvimento em um único PR
+    groups:
+      dev-dependencies:
+        patterns:
+          - "nodemon"
+        update-types:
+          - "minor"
+          - "patch"
+    # Configurações de segurança
+    security-updates-only: false
+    # Atribuir revisores para os PRs
+    assignees:
+      - "seu-usuario-github"
+    labels:
+      - "dependencies"
+      - "npm"
