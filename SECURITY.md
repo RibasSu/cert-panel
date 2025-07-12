@@ -1,8 +1,8 @@
-# Política de Segurança do ZeroCert
+# Política de Segurança do Test Cert Panel da ZeroCert
 
 ## Aviso Importante
 
-**O ZeroCert é um sistema de simulação da ICP-Brasil destinado EXCLUSIVAMENTE para fins de teste e desenvolvimento.** Os certificados digitais emitidos por este sistema NÃO são reconhecidos oficialmente e NÃO devem ser utilizados em ambientes de produção ou para qualquer finalidade que exija certificados digitais válidos e legalmente reconhecidos.
+**O Test Cert Panel é um sistema de simulação da ICP-Brasil destinado EXCLUSIVAMENTE para fins de teste e desenvolvimento.** Os certificados digitais emitidos por este sistema NÃO são reconhecidos oficialmente e NÃO devem ser utilizados em ambientes de produção ou para qualquer finalidade que exija certificados digitais válidos e legalmente reconhecidos.
 
 ## Limitações de Segurança
 
