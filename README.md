@@ -21,8 +21,8 @@ O ZeroCert é um sistema que simula a Infraestrutura de Chaves Públicas Brasile
 
 1. Clone o repositório:
    ```
-   git clone https://github.com/seu-usuario/zerocert.git
-   cd zerocert/icp-test
+   git clone https://github.com/RibasSu/cert-panel.git
+   cd cert-panel
    ```
 
 2. Instale as dependências:
